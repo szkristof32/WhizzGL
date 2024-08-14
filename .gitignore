@@ -1,0 +1,10 @@
+﻿.idea
+.vs
+CMakeFiles
+Debug
+*.vcxproj
+*.filters
+*.user
+*.sln
+CMakeCache.txt
+cmake_install.cmake
