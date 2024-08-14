@@ -2,22 +2,22 @@
 
 #include <stdio.h>
 
-typedef void (APIENTRYP pfn_glCullFace)(GLcullmode_t mode);
-typedef void (APIENTRYP pfn_glFrontFace)(GLpolygonface_t mode);
-typedef void (APIENTRYP pfn_glHint)(GLhinttarget_t target, GLhintmode_t mode);
-typedef void (APIENTRYP pfn_glLineWidth)(GLfloat width);
-typedef void (APIENTRYP pfn_glPointSize)(GLfloat size);
-typedef void (APIENTRYP pfn_glPolygonMode)(GLpolygonface_t face, GLpolygonmode_t mode);
-typedef void (APIENTRYP pfn_glScissor)(GLint x, GLint y, GLsizei width, GLsizei height);
-typedef void (APIENTRYP pfn_glTexParameterf)(GLtexturetype_t target, GLtextureparameter_t pname, GLfloat param);
-typedef void (APIENTRYP pfn_glTexParameterfv)(GLtexturetype_t target, GLtextureparameter_t pname, const GLfloat* params);
-typedef void (APIENTRYP pfn_glTexParameteri)(GLtexturetype_t target, GLtextureparameter_t pname, GLint param);
-typedef void (APIENTRYP pfn_glTexParameteriv)(GLtexturetype_t target, GLtextureparameter_t pname, const GLint* params);
-typedef void (APIENTRYP pfn_glTexImage1D)(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLint border, GLformat_t format, GLdatatype_t type, const void* data);
-typedef void (APIENTRYP pfn_glTexImage2D)(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLsizei height, GLint border, GLformat_t format, GLdatatype_t type, const void* data);
+typedef void (APIENTRYP pfn_glCullFace)(GlCullMode mode);
+typedef void (APIENTRYP pfn_glFrontFace)(GlPolygonFace mode);
+typedef void (APIENTRYP pfn_glHint)(GlHintTarget target, GlHintMode mode);
+typedef void (APIENTRYP pfn_glLineWidth)(GlFloat32 width);
+typedef void (APIENTRYP pfn_glPointSize)(GlFloat32 size);
+typedef void (APIENTRYP pfn_glPolygonMode)(GlPolygonFace face, GlPolygonMode mode);
+typedef void (APIENTRYP pfn_glScissor)(GlInt32 x, GlInt32 y, GlSizei width, GlSizei height);
+typedef void (APIENTRYP pfn_glTexParameterf)(GlTextureType target, GlTextureParameter pname, GlFloat32 param);
+typedef void (APIENTRYP pfn_glTexParameterfv)(GlTextureType target, GlTextureParameter pname, const GlFloat32* params);
+typedef void (APIENTRYP pfn_glTexParameteri)(GlTextureType target, GlTextureParameter pname, GlFloat32 param);
+typedef void (APIENTRYP pfn_glTexParameteriv)(GlTextureType target, GlTextureParameter pname, const GlFloat32* params);
+typedef void (APIENTRYP pfn_glTexImage1D)(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlInt32 border, GlFormat format, GlDataType type, const void* data);
+typedef void (APIENTRYP pfn_glTexImage2D)(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlSizei height, GlInt32 border, GlFormat format, GlDataType type, const void* data);
 typedef void (APIENTRYP pfn_glDrawBuffer)(int buffer);
-typedef void (APIENTRYP pfn_glClear)(GLclearmask_t mask);
-typedef void (APIENTRYP pfn_glClearColor)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+typedef void (APIENTRYP pfn_glClear)(GlClearMask mask);
+typedef void (APIENTRYP pfn_glClearColor)(GlFloat32 red, GlFloat32 green, GlFloat32 blue, GlFloat32 alpha);
 
 pfn_glCullFace _glCullFace = NULL;
 pfn_glFrontFace _glFrontFace = NULL;
@@ -51,6 +51,11 @@ int APIENTRY wzLoadOpenGL()
 	return _openGLLib != NULL;
 }
 
+int APIENTRY wzShutdownOpenGL()
+{
+	FreeLibrary(_openGLLib);
+}
+
 static int _loadOpenGLFunc(const char* name, void** output)
 {
 	INIT_SUCCESS(0);
@@ -67,67 +72,67 @@ static int _loadOpenGLFunc(const char* name, void** output)
 	return 0;
 }
 
-void APIENTRY glCullFace(GLcullmode_t mode)
+void APIENTRY glCullFace(GlCullMode mode)
 {
 	CALL_OPENGL(glCullFace, mode);
 }
 
-void APIENTRY glFrontFace(GLpolygonface_t mode)
+void APIENTRY glFrontFace(GlPolygonFace mode)
 {
 	CALL_OPENGL(glFrontFace, mode);
 }
 
-void APIENTRY glHint(GLhinttarget_t target, GLhintmode_t mode)
+void APIENTRY glHint(GlHintTarget target, GlHintMode mode)
 {
 	CALL_OPENGL(glFrontFace, mode);
 }
 
-void APIENTRY glLineWidth(GLfloat width)
+void APIENTRY glLineWidth(GlFloat32 width)
 {
 	CALL_OPENGL(glLineWidth, width);
 }
 
-void APIENTRY glPointSize(GLfloat size)
+void APIENTRY glPointSize(GlFloat32 size)
 {
 	CALL_OPENGL(glPointSize, size);
 }
 
-void APIENTRY glPolygonMode(GLpolygonface_t face, GLpolygonmode_t mode)
+void APIENTRY glPolygonMode(GlPolygonFace face, GlPolygonMode mode)
 {
 	CALL_OPENGL(glPolygonMode, face, mode);
 }
 
-void APIENTRY glScissor(GLint x, GLint y, GLsizei width, GLsizei height)
+void APIENTRY glScissor(GlInt32 x, GlInt32 y, GlSizei width, GlSizei height)
 {
 	CALL_OPENGL(glScissor, x, y, width, height);
 }
 
-void APIENTRY glTexParameterf(GLtexturetype_t target, GLtextureparameter_t pname, GLfloat param)
+void APIENTRY glTexParameterf(GlTextureType target, GlTextureParameter pname, GlFloat32 param)
 {
 	CALL_OPENGL(glTexParameterf, target, pname, param);
 }
 
-void APIENTRY glTexParameterfv(GLtexturetype_t target, GLtextureparameter_t pname, const GLfloat* params)
+void APIENTRY glTexParameterfv(GlTextureType target, GlTextureParameter pname, const GlFloat32* params)
 {
 	CALL_OPENGL(glTexParameterfv, target, pname, params);
 }
 
-void APIENTRY glTexParameteri(GLtexturetype_t target, GLtextureparameter_t pname, GLint param)
+void APIENTRY glTexParameteri(GlTextureType target, GlTextureParameter pname, GlFloat32 param)
 {
 	CALL_OPENGL(glTexParameteri, target, pname, param);
 }
 
-void APIENTRY glTexParameteriv(GLtexturetype_t target, GLtextureparameter_t pname, const GLint* params)
+void APIENTRY glTexParameteriv(GlTextureType target, GlTextureParameter pname, const GlFloat32* params)
 {
 	CALL_OPENGL(glTexParameteriv, target, pname, params);
 }
 
-void APIENTRY glTexImage1D(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLint border, GLformat_t format, GLdatatype_t type, const void* data)
+void APIENTRY glTexImage1D(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlInt32 border, GlFormat format, GlDataType type, const void* data)
 {
 	CALL_OPENGL(glTexImage1D, target, level, internalformat, width, border, format, type, data);
 }
 
-void APIENTRY glTexImage2D(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLsizei height, GLint border, GLformat_t format, GLdatatype_t type, const void* data)
+void APIENTRY glTexImage2D(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlSizei height, GlInt32 border, GlFormat format, GlDataType type, const void* data)
 {
 	CALL_OPENGL(glTexImage2D, target, level, internalformat, width, height, border, format, type, data);
 }
@@ -137,12 +142,12 @@ void APIENTRY glDrawBuffer(int buffer)
 	CALL_OPENGL(glDrawBuffer, buffer);
 }
 
-void APIENTRY glClear(GLclearmask_t mask)
+void APIENTRY glClear(GlClearMask mask)
 {
 	CALL_OPENGL(glClear, mask);
 }
 
-void APIENTRY glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void APIENTRY glClearColor(GlFloat32 red, GlFloat32 green, GlFloat32 blue, GlFloat32 alpha)
 {
 	CALL_OPENGL(glClearColor, red, green, blue, alpha);
 }

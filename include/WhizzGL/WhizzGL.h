@@ -61,24 +61,27 @@ extern "C" {
 
 #include <stdint.h>
 
-typedef float GLfloat;
-typedef int GLint;
-typedef int GLsizei;
+typedef float GlFloat32;
+typedef int32_t GlInt32;
+typedef GlInt32 GlSizei;
 
-typedef enum GLboolean_t
+typedef uint32_t GlFlags;
+
+typedef enum GlBool32
 {
 	GL_FALSE = 0,
 	GL_TRUE = 1
-} GLboolean_t;
+} GlBool32;
 
-typedef enum GLclearmask_t
+typedef enum GlClearMaskBits
 {
 	GL_DEPTH_BUFFER_BIT = 0x00000100,
 	GL_STENCIL_BUFFER_BIT = 0x00000400,
 	GL_COLOR_BUFFER_BIT = 0x00004000,
-} GLclearmask_t;
+} GlClearMaskBits;
+typedef GlFlags GlClearMask;
 
-typedef enum GLprimitivemode_t
+typedef enum GlPrimitiveMode
 {
 	GL_POINTS = 0x0000,
 	GL_LINES = 0x0001,
@@ -87,9 +90,9 @@ typedef enum GLprimitivemode_t
 	GL_TRIANGLES = 0x0004,
 	GL_TRIANGLE_STRIP = 0x0005,
 	GL_TRIANGLE_FAN = 0x0006,
-} GLprimitivemode_t;
+} GlPrimitiveMode;
 
-typedef enum GLblendop_t
+typedef enum GlBlendOp
 {
 	GL_NEVER = 0x0200,
 	GL_LESS = 0x0201,
@@ -99,9 +102,9 @@ typedef enum GLblendop_t
 	GL_NOTEQUAL = 0x0205,
 	GL_GEQUAL = 0x0206,
 	GL_ALWAYS = 0x0207,
-} GLblendop_t;
+} GlBlendOp;
 
-typedef enum GLblendfactor_t
+typedef enum GlBlendFactor
 {
 	GL_ZERO = 0x0000,
 	GL_ONE = 0x0001,
@@ -114,44 +117,44 @@ typedef enum GLblendfactor_t
 	GL_DST_COLOR = 0x0306,
 	GL_ONE_MINUS_DST_COLOR = 0x0307,
 	GL_SRC_ALPHA_SATURATE = 0x0308,
-} GLblendfactor_t;
+} GlBlendFactor;
 
-typedef enum GLcullmode_t
+typedef enum GlCullMode
 {
 	GL_FRONT = 0x0404,
 	GL_BACK = 0x0405,
 	GL_FRONT_AND_BACK = 0x0408,
-} GLcullmode_t;
+} GlCullMode;
 
-typedef enum GLpolygonface_t
+typedef enum GlPolygonFace
 {
 	GL_CW = 0x0900,
 	GL_CCW = 0x0901,
-} GLpolygonface_t;
+} GlPolygonFace;
 
-typedef enum GLhinttarget_t
+typedef enum GlHintTarget
 {
 	GL_LINE_SMOOTH_HINT = 0x0C52,
 	GL_POLYGON_SMOOTH_HINT = 0x0C53,
 	GL_TEXTURE_COMPRESSION_HINT = 0x84EF,
 	GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B,
-} GLhinttarget_t;
+} GlHintTarget;
 
-typedef enum GLhintmode_t
+typedef enum GlHintMode
 {
 	GL_DONT_CARE = 0x1100,
 	GL_FASTEST = 0x1101,
 	GL_NICEST = 0x1102,
-} GLhintmode_t;
+} GlHintMode;
 
-typedef enum GLpolygonmode_t
+typedef enum GlPolygonMode
 {
 	GL_POINT = 0x1B00,
 	GL_LINE = 0x1B01,
 	GL_FILL = 0x1B02,
-} GLpolygonmode_t;
+} GlPolygonMode;
 
-typedef enum GLtexturetype_t
+typedef enum GlTextureType
 {
 	GL_TEXTURE_1D = 0x0DE0,
 	GL_TEXTURE_2D = 0x0DE1,
@@ -163,9 +166,9 @@ typedef enum GLtexturetype_t
 	GL_TEXTURE_CUBE_MAP = 0x8513,
 	GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009,
 	GL_TEXTURE_RECTANGLE = 0x84F5,
-} GLtexturetype_t;
+} GlTextureType;
 
-typedef enum GLtextureparameter_t
+typedef enum GlTextureParameter
 {
 	GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90EA,
 	GL_TEXTURE_BASE_LEVEL = 0x813C,
@@ -184,14 +187,14 @@ typedef enum GLtextureparameter_t
 	GL_TEXTURE_WRAP_S = 0x2802,
 	GL_TEXTURE_WRAP_T = 0x2803,
 	GL_TEXTURE_WRAP_R = 0x8072,
-} GLtextureparameter_t;
+} GlTextureParameter;
 
-typedef enum GLinternalformat_t
+typedef enum GlInternalFormat
 {
 	
-} GLinternalformat_t;
+} GlInternalFormat;
 
-typedef enum GLformat_t
+typedef enum GlFormat
 {
 	GL_RED = 0x1903,
 	GL_RG = 0x8227,
@@ -208,9 +211,9 @@ typedef enum GLformat_t
 	GL_STENCIL_INDEX = 0x1901,
 	GL_DEPTH_COMPONENT = 0x1902,
 	GL_DEPTH_STENCIL = 0x84F9,
-} GLformat_t;
+} GlFormat;
 
-typedef enum GLdatatype_t
+typedef enum GlDataType
 {
 	GL_BYTE = 0x1400,
 	GL_UNSIGNED_BYTE = 0x1401,
@@ -232,26 +235,27 @@ typedef enum GLdatatype_t
 	GL_UNSIGNED_INT_8_8_8_8_REV = 0x8367,
 	GL_UNSIGNED_INT_10_10_10_2 = 0x8036,
 	GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368,
-} GLdatatype_t;
+} GlDataType;
 
 int APIENTRY wzLoadOpenGL();
+int APIENTRY wzShutdownOpenGL();
 
-void APIENTRY glCullFace(GLcullmode_t mode);
-void APIENTRY glFrontFace(GLpolygonface_t mode);
-void APIENTRY glHint(GLhinttarget_t target, GLhintmode_t mode);
-void APIENTRY glLineWidth(GLfloat width);
-void APIENTRY glPointSize(GLfloat size);
-void APIENTRY glPolygonMode(GLpolygonface_t face, GLpolygonmode_t mode);
-void APIENTRY glScissor(GLint x, GLint y, GLsizei width, GLsizei height);
-void APIENTRY glTexParameterf(GLtexturetype_t target, GLtextureparameter_t pname, GLfloat param);
-void APIENTRY glTexParameterfv(GLtexturetype_t target, GLtextureparameter_t pname, const GLfloat* params);
-void APIENTRY glTexParameteri(GLtexturetype_t target, GLtextureparameter_t pname, GLint param);
-void APIENTRY glTexParameteriv(GLtexturetype_t target, GLtextureparameter_t pname, const GLint* params);
-void APIENTRY glTexImage1D(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLint border, GLformat_t format, GLdatatype_t type, const void* data);
-void APIENTRY glTexImage2D(GLtexturetype_t target, GLint level, GLinternalformat_t internalformat, GLsizei width, GLsizei height, GLint border, GLformat_t format, GLdatatype_t type, const void* data);
+void APIENTRY glCullFace(GlCullMode mode);
+void APIENTRY glFrontFace(GlPolygonFace mode);
+void APIENTRY glHint(GlHintTarget target, GlHintMode mode);
+void APIENTRY glLineWidth(GlFloat32 width);
+void APIENTRY glPointSize(GlFloat32 size);
+void APIENTRY glPolygonMode(GlPolygonFace face, GlPolygonMode mode);
+void APIENTRY glScissor(GlInt32 x, GlInt32 y, GlSizei width, GlSizei height);
+void APIENTRY glTexParameterf(GlTextureType target, GlTextureParameter pname, GlFloat32 param);
+void APIENTRY glTexParameterfv(GlTextureType target, GlTextureParameter pname, const GlFloat32* params);
+void APIENTRY glTexParameteri(GlTextureType target, GlTextureParameter pname, GlFloat32 param);
+void APIENTRY glTexParameteriv(GlTextureType target, GlTextureParameter pname, const GlFloat32* params);
+void APIENTRY glTexImage1D(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlInt32 border, GlFormat format, GlDataType type, const void* data);
+void APIENTRY glTexImage2D(GlTextureType target, GlInt32 level, GlTextureParameter internalformat, GlSizei width, GlSizei height, GlInt32 border, GlFormat format, GlDataType type, const void* data);
 void APIENTRY glDrawBuffer(int buffer);
-void APIENTRY glClear(GLclearmask_t mask);
-void APIENTRY glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+void APIENTRY glClear(GlClearMask mask);
+void APIENTRY glClearColor(GlFloat32 red, GlFloat32 green, GlFloat32 blue, GlFloat32 alpha);
 
 #if 0
 typedef void (APIENTRYP PFNGLCLEARSTENCILPROC)(GLint s);
