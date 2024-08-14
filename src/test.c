@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "WhizzGL.h"
+#include "WhizzGL/WhizzGL.h"
 
 #include <Windows.h>
 #include <gl/GL.h>

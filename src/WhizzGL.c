@@ -1,4 +1,4 @@
-#include "WhizzGL.h"
+#include "WhizzGL/WhizzGL.h"
 
 #include <stdio.h>
 
